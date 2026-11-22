@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Thread Peek",
+  "version": "0.1.0",
+  "description": "Summarize X/Twitter threads inline, right in your timeline, without opening them.",
+  "permissions": ["storage", "webRequest"],
+  "host_permissions": [
+    "https://x.com/*",
+    "https://twitter.com/*",
+    "https://abs.twimg.com/*",
+    "https://api.anthropic.com/*"
+  ],
+  "background": { "service_worker": "src/background.js" },
+  "content_scripts": [
+    {
+      "matches": ["https://x.com/*", "https://twitter.com/*"],
+      "js": ["src/parse.js", "src/summarize.js", "src/x-api.js", "src/content.js"],
+      "css": ["src/content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_page": "options.html",
+  "action": { "default_title": "Thread Peek settings", "default_popup": "options.html" }
+}
